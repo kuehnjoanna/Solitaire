@@ -6,7 +6,7 @@
 //
 
 import Foundation
-struct CardModel: Identifiable {
+struct CardModel: Identifiable, Hashable {
     var id = UUID()
     var suit: Suit
     var rank: Int
