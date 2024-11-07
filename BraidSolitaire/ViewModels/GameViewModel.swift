@@ -11,8 +11,7 @@ class GameViewModel: ObservableObject{
     private var cardsRepo = CardsRepository()
     
     var movedCards: [Card] = []
-    var collection: [Card] = []
-    var collection2: [[Card]] = [[], [], [], [], [], [], [], []]
+    var collection: [[Card]] = [[], [], [], [], [], [], [], []]
     var braid: [Card] = []
     var edges: [Card] = []
     var helpers: [Card] = []
@@ -27,8 +26,7 @@ class GameViewModel: ObservableObject{
     func initializeCards(){
         //making sure all the lists are empty(in case of previous games)
         movedCards = []
-        collection = []
-        collection2 = [[],[],[],[],[],[],[],[]]
+        collection = [[],[],[],[],[],[],[],[]]
         braid = []
         edges = []
         helpers = []
@@ -69,8 +67,8 @@ class GameViewModel: ObservableObject{
         }
         shuffledDeck.removeLast()
         //    print("first: \(first), remove last: \(shuffledDeck)")
-        collection2.append([first])
-        print("COLLECTION \(collection2)")
+        collection.append([first])
+        print("COLLECTION \(collection)")
         startingRank = first.rank
     }
     
@@ -89,7 +87,7 @@ class GameViewModel: ObservableObject{
         //on movedc card clicked
         cardTapped(thisCard: lastCard)
     }
-    ///
+    ///why di we have to do it as separate function and not in the movecard
     func cardTapped( thisCard: Card ) {
            for i in 0...7{
                let success = moveIfCollectionAccepts(collectionIndex: i, thisCard: thisCard )
@@ -97,33 +95,34 @@ class GameViewModel: ObservableObject{
                     return // already moved the card, don't check other indices
                }
            }
-        }
-        func moveIfCollectionAccepts( collectionIndex i: Int, thisCard: Card )->Bool{
+    }
+    
+    func moveIfCollectionAccepts( collectionIndex i: Int, thisCard: Card )->Bool{
             guard let currentCard = currentCard else { return false}
-            if collection2[i].isEmpty{
+            if collection[i].isEmpty{
                 if thisCard.rank != startingRank{ // if ranks don't match, move on
                     return false
                 }
                 move(currentcard: currentCard, collectionIndex: i)
                 return true
             }
-            if collection.last!.suit != thisCard.suit{ // if suits don't mach, move on
+            if collection[i].last!.suit != thisCard.suit{ // if suits don't mach, move on
                 return false
             }
-            if !canFollow(lastRank: collection.last!.rank, currentRank: thisCard.rank){
+            if !canFollow(lastRank: collection[i].last!.rank, currentRank: thisCard.rank){
                 return false // if can't follow move on
             }
             // passed all tests
             move(currentcard: currentCard, collectionIndex: i)
             return true
         }
-        func move(currentcard: Card, collectionIndex: Int){
+    func move(currentcard: Card, collectionIndex: Int){
             movedCards.removeLast()
-            collection2[collectionIndex].append(currentcard)
-            print("card found! collection: \(collection2)")
+            collection[collectionIndex].append(currentcard)
+            print("card found! collection: \(collection)")
             currentCard = movedCards.last
         }
-        func canFollow(lastRank: Int, currentRank: Int)-> Bool{
+    func canFollow(lastRank: Int, currentRank: Int)-> Bool{
             if lastRank == 13 && currentRank == 1 {
                 return true
             }
@@ -135,70 +134,4 @@ class GameViewModel: ObservableObject{
             return false
             
         }
-    
-    ////
-//    func cardTapped( thisCard: Card ) {
-//       for i in 0...7{
-//           let success = moveIfCollectionAccepts(collection: collection2[i], thisCard: thisCard )
-//           if (success) {
-//           }
-//       }
-//    }    
-//    func moveIfCollectionAccepts( collection: [Card], thisCard: Card )->Bool{
-//        if collection.isEmpty{
-//            if thisCard.rank != startingRank{
-//                return false
-//            }
-//            move()
-//            return true
-//        }
-//        if collection.last?.suit != thisCard.suit{
-//            return false
-//        }
-//        if !canFollow(lastRank: collection.last!.rank, currentCard: thisCard.rank){
-//            return false
-//        }
-//        return true
-//    }
-//    func move(){
-//        
-//    }
-//    func canFollow(lastRank: Int, currentCard: Int)-> Bool{
-//        if lastRank == currentCard - 1{
-//            return true
-//        }else{
-//            return false
-//        }
-//    }
-    //check naming lol
-    func moveCardIfPossible(){
-        guard let currentCard = currentCard else { return }
-//                    for (index, cards) in collection2.enumerated(){
-//                        if collection2[index].isEmpty{
-//                            if currentCard.rank == startingRank{
-//                                movedCards.removeAll{ $0 == currentCard }
-//                                collection2[index].append(currentCard)
-//                                print("\(currentCard.rank) \(currentCard.suit) added to empty collection")
-//                            }else{
-//                                print("cards rank is not starting rank")
-//                            }
-//                        }else{
-//                            if currentCard.suit == cards.first?.suit{
-//                                    for card in cards{
-//                                        if self.currentCard?.rank == cards.last?.rank + 1{
-//                                            movedCards.removeAll{ $0 == currentCard }
-//                                           collection2[index].append(currentCard)
-//                                            print("card found! collection: \(collection2)")
-//                                            self.currentCard = movedCards.last
-//                                        }else{
-//                                            print("cards rank is not the right one")
-//                                        }
-//                                    }
-//                            }else{
-//                                print("cards suit doesnt fit the collections suit")
-//                            }
-//                    }
-//        }
-        
-    }
 }
