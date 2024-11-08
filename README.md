@@ -1,4 +1,4 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/lf0EMZwr)
+<!--- [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/lf0EMZwr)
 # Name der App
 
 **Braid Solitaire** ist ein einzigartiges Kartenspiel, das klassische Solitaire-Mechanik mit flüssigen Kartentransitionen und modernen Animationen vereint. Der integrierte Spiel-Timer und umfassende Statistiken sorgen für den zusätzlichen Wettbewerb und zeigen persönliche Fortschritte. Dank der klaren, interaktiven Anleitung ist das Spiel auch für Einsteiger bestens geeignet – ideal für eine entspannte, aber dennoch spannende Solo-Kartenerfahrung.
@@ -47,4 +47,4 @@ Beschreibe hier, wo die Reise nach deinem Praxisprojekt hin geht. Was möchtest 
 
 - [ ] Geplantes Feature 1
 - [ ] Geplantes Feature 2
-- [ ] ...
+- [ ] ... --->
