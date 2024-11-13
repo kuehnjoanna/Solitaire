@@ -4,21 +4,24 @@
 //
 //  Created by Joanna Kühn on 31.10.24.
 //
-
+//should we call move function movetoacollection?
 import Foundation
 import SwiftUI
+
 class GameViewModel: ObservableObject{
     private var cardsRepo = CardsRepository()
     
-    var movedCards: [Card] = []
-    var collection: [[Card]] = [[], [], [], [], [], [], [], []]
-    var braid: [Card] = []
-    var edges: [Card] = []
-    var helpers: [Card] = []
-    var shuffledDeck : [Card] = []
-    var currentCard: Card? = nil
+    @Published var movedCards: [Card] = []
+    @Published var collection: [[Card]] = [[], [], [], [], [], [], [], []]
+    @Published var braid: [Card] = []
+    @Published var edges: [Card] = []
+    @Published var helpers: [Card] = []
+    @Published var shuffledDeck : [Card] = []
+    @Published var currentCard: Card? = nil
     var startingRank: Int = 0
-    
+    init(){
+        initializeCards()
+    }
     
     //command + choose section = fold
     ////////////////////////////////////////////INITIALIZING
@@ -42,6 +45,22 @@ class GameViewModel: ObservableObject{
         //
         startCollection()
     }
+    
+    // getting edges filled from braid
+    
+    func fillTheEdges(){
+        while(edges.count < 4){
+            if braid.count == 0 {
+                return
+            }
+            edges.append(braid.removeLast())
+            print(braid.count)
+        }
+    }
+    
+    //
+
+
     //function for shuffling card deck
     func shuffleCardDeck(){
         let shuffledCards: [Card] = cardsRepo.doubleDeck.shuffled()
@@ -67,7 +86,7 @@ class GameViewModel: ObservableObject{
         }
         shuffledDeck.removeLast()
         //    print("first: \(first), remove last: \(shuffledDeck)")
-        collection.append([first])
+        collection[1].append(contentsOf: [first])
         print("COLLECTION \(collection)")
         startingRank = first.rank
     }
@@ -81,6 +100,7 @@ class GameViewModel: ObservableObject{
             
         }
         movedCards.append(shuffledDeck.removeLast())
+        shuffledDeck.removeLast()// error handling needed
         print(shuffledDeck.count)
         //  print(movedCards)
         currentCard = lastCard
@@ -95,6 +115,20 @@ class GameViewModel: ObservableObject{
                     return // already moved the card, don't check other indices
                }
            }
+//        if edges.count < 4{
+//            guard let lastCard = movedCards.last else {
+//                return print("deck is empty! deck: \(movedCards)")
+//            }
+//            edges.append(movedCards.removeLast())
+//            print(movedCards.count)
+//        }
+//        if helpers.count < 8{
+//            guard let lastCard = movedCards.last else {
+//                return print("deck is empty! deck: \(movedCards)")
+//            }
+//            helpers.append(movedCards.removeLast())
+//            print(movedCards.count)
+//        }
     }
     
     func moveIfCollectionAccepts( collectionIndex i: Int, thisCard: Card )->Bool{
@@ -103,7 +137,7 @@ class GameViewModel: ObservableObject{
                 if thisCard.rank != startingRank{ // if ranks don't match, move on
                     return false
                 }
-                move(currentcard: currentCard, collectionIndex: i)
+                moveCurrentCard( collectionIndex: i)
                 return true
             }
             if collection[i].last!.suit != thisCard.suit{ // if suits don't mach, move on
@@ -113,14 +147,15 @@ class GameViewModel: ObservableObject{
                 return false // if can't follow move on
             }
             // passed all tests
-            move(currentcard: currentCard, collectionIndex: i)
+            moveCurrentCard( collectionIndex: i)
             return true
         }
-    func move(currentcard: Card, collectionIndex: Int){
+    func moveCurrentCard( collectionIndex: Int){
+            guard let currentCard = currentCard else { return}
             movedCards.removeLast()
-            collection[collectionIndex].append(currentcard)
+            collection[collectionIndex].append(currentCard)
             print("card found! collection: \(collection)")
-            currentCard = movedCards.last
+            self.currentCard = movedCards.last
         }
     func canFollow(lastRank: Int, currentRank: Int)-> Bool{
             if lastRank == 13 && currentRank == 1 {

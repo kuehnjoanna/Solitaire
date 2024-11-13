@@ -11,7 +11,8 @@ import SwiftUI
 struct BraidSolitaireApp: App {
     var body: some Scene {
         WindowGroup {
-        //   GameView()
+          GameView()
+          // WelcomeView()
         }
     }
 }
