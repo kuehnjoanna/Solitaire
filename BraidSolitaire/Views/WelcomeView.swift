@@ -9,15 +9,12 @@ import SwiftUI
 
 
 struct WelcomeView: View {
-    
-    var body: some View {
-        HStack {
-            
-        }
-        .frame(height: UIScreen.main.bounds.height)
-    }
 
-    
+
+    var body: some View {
+        HStack(alignment: .center) {
+        }
+    }
     
 }
 

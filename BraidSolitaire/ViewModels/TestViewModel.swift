@@ -1,14 +1,12 @@
 //
-//  GameViewModel.swift
+//  TestViewModel.swift
 //  BraidSolitaire
 //
-//  Created by Joanna Kühn on 31.10.24.
+//  Created by Joanna Kühn on 17.11.24.
 //
-//should we call move function movetoacollection?
-import Foundation
-import SwiftUI
 
-class GameViewModel: ObservableObject{
+import Foundation
+class TestViewModel: ObservableObject{
     
     private var cardsRepo = CardsRepository()
     @Published var slots = [[Card]]()

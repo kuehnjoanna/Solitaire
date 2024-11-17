@@ -8,6 +8,8 @@
 import SwiftUI
 struct GameView: View {
     @StateObject var gameViewModel = GameViewModel()
+    
+    @StateObject private var viewModel = ApiViewModel()
     @Namespace var namespace
     let columns = [
         GridItem(.fixed(40)),
@@ -17,9 +19,11 @@ struct GameView: View {
         HStack(alignment: .center) {
             VStack{
                 LazyVGrid(columns: columns, spacing: 2) {  // Grid with two columns
-                    ForEach(gameViewModel.collection.indices, id: \.self) { index in
-                        if !gameViewModel.collection[index].isEmpty{
-                            CardView(card: gameViewModel.collection[index].last!)
+                    
+                    ForEach(slotCode.collectionsFirst.rawValue...22, id: \.self){ index in
+                        if !gameViewModel.slots[index].isEmpty{
+                            CardView(cardPicture: gameViewModel.slots[index].last!.picture)
+                            
                         } else{
                             RoundedRectangle(cornerRadius: 25)
                                 .overlay(
@@ -32,14 +36,19 @@ struct GameView: View {
                                 .frame(width: 40, height: 60)
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
                         }
+                        
                     }
+
                 }
             }
             VStack(){
                 ZStack{
-                ForEach(gameViewModel.braid.indices, id: \.self) { index in
-                    let card = gameViewModel.braid[index]
-                    CardView(card: card)
+                    
+                    //schreiben tap fur der letzte
+                    ForEach(gameViewModel.slots[slotCode.braid.rawValue].indices, id: \.self) { index in
+                        let isLastCard = index == gameViewModel.slots[slotCode.braid.rawValue].indices.last
+                        let cardPicture = gameViewModel.slots[slotCode.braid.rawValue][index].picture
+                    CardView(cardPicture: cardPicture)
                         .visualEffect { @MainActor content, geometryProxy in
                             content
                                 .rotationEffect(
@@ -50,16 +59,31 @@ struct GameView: View {
                                     y: CGFloat(index) * 15
                                 )
                         }
-                        .matchedGeometryEffect(id: card.id, in: namespace)
+                        .matchedGeometryEffect(id: gameViewModel.slots[slotCode.braid.rawValue][index].id, in: namespace)
+                        .onTapGesture {
+                                       if isLastCard {
+                                           // Perform your desired action here
+                                           gameViewModel.slotTapped(slotNum: 14)
+                                       }
+                                   }
                 }
                 }.frame( maxHeight: .infinity, alignment: .topLeading)
                     .padding(20)
             }
             VStack{
                 LazyVGrid(columns: [GridItem(.fixed(70))], spacing: 2) {  // Grid with two columns
-                    ForEach(gameViewModel.edges.indices, id: \.self) { index in
-                        if !gameViewModel.edges.isEmpty{
-                            CardView(card: gameViewModel.edges[index])
+                    
+                    ForEach(slotCode.cornersFirst.rawValue...(slotCode.braid.rawValue - 1), id: \.self){index in
+                        if !gameViewModel.slots[index].isEmpty{
+                            CardView(cardPicture: gameViewModel.slots[index].last!.picture)
+                                .matchedGeometryEffect(id: gameViewModel.slots[index].last!.id, in: namespace)
+                                .onTapGesture {
+                                    withAnimation(.easeInOut) {
+                                        gameViewModel.slotTapped(slotNum: index)//
+                                        print("cardtapped  id\(index)")
+                                    }
+                                }
+                            
                         } else{
                             RoundedRectangle(cornerRadius: 25)
                                 .overlay(
@@ -69,16 +93,29 @@ struct GameView: View {
                                         .frame(width: 50, height: 70)
                                     
                                 )
-                                .frame(width: 50, height: 70)
+                                .frame(width: 40, height: 60)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
                         }
+                        
                     }
                 }
             }
             VStack{
+                
                 LazyVGrid(columns: columns, spacing: 0) {  // Grid with two columns
-                    ForEach(gameViewModel.helpers.indices, id: \.self) { index in
-                        if !gameViewModel.helpers.isEmpty{
-                            CardView(card: gameViewModel.helpers[index])
+                    
+                    ForEach(slotCode.helpersFirst.rawValue...(slotCode.cornersFirst.rawValue - 1), id: \.self){index in
+                        if !gameViewModel.slots[index].isEmpty{
+                            CardView(cardPicture: gameViewModel.slots[index].last!.picture)
+                                .matchedGeometryEffect(id: gameViewModel.slots[index].last!.id, in: namespace)
+                                .onTapGesture {
+                                    withAnimation(.easeInOut) {
+                                        gameViewModel.slotTapped(slotNum: index)//
+                                        print("cardtapped  id\(index)")
+                                    }
+                                }
+                            
+                            
                         } else{
                             RoundedRectangle(cornerRadius: 25)
                                 .overlay(
@@ -88,34 +125,37 @@ struct GameView: View {
                                         .frame(width: 50, height: 70)
                                     
                                 )
-                                .frame(width: 50, height: 70)
+                                .frame(width: 40, height: 60)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
                         }
+                        
                     }
                 }
             }
           
             
                         VStack {
-                            Button("check card") {
-                                print(gameViewModel.collection)
+                            Button("undo") {
+                                gameViewModel.unmove()
+                        //        print(gameViewModel.collection)
                             }
                             Button("move card") {
                                 print("card moved")
-                                gameViewModel.moveCard()
+                         //       gameViewModel.moveCard()
                             }
                             Button("shuffle card deck") {
                                 withAnimation(.bouncy) {
-                                    gameViewModel.initializeCards()
+                    //                gameViewModel.initializeCards()
                                 }
-                                print(gameViewModel.shuffledDeck.count)
+                     //           print(gameViewModel.shuffledDeck.count)
                             }
                             Button("click the deck") {
-                                guard let currentCard = gameViewModel.currentCard else { return }
-                                gameViewModel.cardTapped(thisCard: currentCard)
+//                                guard let currentCard = gameViewModel.currentCard else { return }
+//                                gameViewModel.cardTapped(thisCard: currentCard)
                             }
             
                             ZStack {
-                                if gameViewModel.movedCards.isEmpty {
+                                if gameViewModel.slots[slotCode.openDeck.rawValue].isEmpty {
                                     RoundedRectangle(cornerRadius: 25)
                                         .overlay(
                                             Image("cardBackground")
@@ -124,12 +164,13 @@ struct GameView: View {
                                         )
                                         .frame(width: 40, height: 60)
                                 } else {
-                                    ForEach(gameViewModel.movedCards) { card in
-                                        CardView(card: card)
+                                    ForEach(gameViewModel.slots[slotCode.openDeck.rawValue]) { card in
+                                        CardView(cardPicture: card.picture)
                                             .matchedGeometryEffect(id: card.id, in: namespace)
                                             .onTapGesture {
                                                 withAnimation(.easeInOut) {
-                                                    gameViewModel.cardTapped(thisCard: card)
+                                                    gameViewModel.slotTapped(slotNum: 1)
+                                                    print("cardtapped")
                                                 }
                                             }
                                     }
@@ -137,32 +178,71 @@ struct GameView: View {
                             }
                             // Deck of cards
                             ZStack {
-                                if gameViewModel.shuffledDeck.isEmpty {
-                                    RoundedRectangle(cornerRadius: 25)
+                                if gameViewModel.slots[slotCode.closedDeck.rawValue] .isEmpty {
+                                    //if deck is empty
+                                    RoundedRectangle(cornerRadius: 10)
                                         .overlay(
+                              //change for sth better
                                             Image("cardBackground")
-                                                .resizable()
-                                                .scaledToFill()
-                                                .frame(width: 40, height: 60)
-            
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fill)
+                                                        .opacity(0.5)
+                                                        .frame(width: 40, height: 60)
+                                                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                                            
                                         )
                                         .frame(width: 40, height: 60)
                                 } else {
-                                    ForEach(gameViewModel.shuffledDeck) { card in
-                                        CardView(card: card)
+                                    //if deck is not empty
+                                    ForEach(gameViewModel.slots[slotCode.closedDeck.rawValue]) { card in
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .overlay(
+                                                Group {
+                                                    if viewModel.randomImage != nil,
+                                                       let imageURLString = viewModel.randomImage?.largeImageURL,
+                                                       let imageURL = URL(string: imageURLString) {
+                                                        
+                                                        AsyncImage(url: imageURL) { image in
+                                                            image
+                                                                .resizable()
+                                                                .aspectRatio(contentMode: .fill)
+                                                                .frame(width: 40, height: 60)
+                                                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                                        } placeholder: {
+                                                            ProgressView()
+                                                        }
+                                                        
+                                                    } else {
+                                                        // Fallback image or background if URL is invalid or array is empty
+                                                        Image("cardBackground")
+                                                            .resizable()
+                                                            .aspectRatio(contentMode: .fill)
+                                                            .frame(width: 40, height: 60)
+                                                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                                                    }
+                                                }
+                                            )
+                                            .frame(width: 40, height: 60)
                                             .matchedGeometryEffect(id: card.id, in: namespace)
                                             .onTapGesture {
                                                 withAnimation(.easeInOut) {
-                                                    gameViewModel.moveCard()
+                                                    gameViewModel.slotTapped(slotNum: 0)
+                                                    print("cardtapped")
                                                 }
                                             }
                                     }
+                                    
                                 }
                             }
                         }
                             .frame(width: UIScreen.main.bounds.width * 0.3)
+                            .onAppear {
+                                start()
+                            }
         }
     }
+
+    
 }
 
     
@@ -175,11 +255,11 @@ struct GameView: View {
     GameView()
 }
 struct CardView: View {
-    var card: Card
+    var cardPicture: String
     var body: some View{
         RoundedRectangle(cornerRadius: 10)
             .overlay(
-                Image(card.picture)
+                Image(cardPicture)
                     .resizable()
                     .scaledToFill()
             )
@@ -187,17 +267,5 @@ struct CardView: View {
     }
 }
 
-struct EmptyCardView: View {
-    var body: some View{
-        RoundedRectangle(cornerRadius: 25)
-            .overlay(
-                Image("cardBackground")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 100, height: 150)
 
-            )
-            .frame(width: 50, height: 70)
-    }
-}
 

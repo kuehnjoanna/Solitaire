@@ -6,3 +6,6 @@
 //
 
 import Foundation
+protocol ApiRepository{
+    func fetchRandomImages() async throws -> [Hit]
+}
