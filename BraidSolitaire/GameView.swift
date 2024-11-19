@@ -24,13 +24,14 @@ struct GameView: View {
                         if !gameViewModel.slots[index].isEmpty{
                             RoundedRectangle(cornerRadius: 10)
                                 .overlay(
-                                    Image(gameViewModel.slots[index].first!.picture)
+                                    Image(gameViewModel.slots[index].last!.picture)
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
                                         .frame(width: 40, height: 60)
                                         .clipShape(RoundedRectangle(cornerRadius: 10))
                                 )
                                 .frame(width: 40, height: 60)
+                                .matchedGeometryEffect(id: gameViewModel.slots[index].last!.id, in: namespace)
                             
                         } else{
                             EmptyCardView(opacity: 0.5, apiImage: viewModel.randomImage, apiImageURL: viewModel.randomImage?.largeImageURL)
@@ -44,34 +45,33 @@ struct GameView: View {
             // BRAID
             VStack(){
                 ZStack{
-                    if !gameViewModel.slots[SlotCode.braid.rawValue].isEmpty{
-                        
-                                            ForEach(gameViewModel.slots[SlotCode.braid.rawValue], id: \.self) { index in
-                                                //                        let isLastCard = gameViewModel.slots[SlotCode.braid.rawValue].last
-                                                //                        let cardPicture = gameViewModel.slots[SlotCode.braid.rawValue][index].picture
-                                                CardView(image: index.picture)
-                                                    .visualEffect { @MainActor content, geometryProxy in
-                                                        content
-                                                            .rotationEffect(
-                                                                Angle(degrees: index % 2 == 0 ? progress(geometryProxy) * -15 : progress(geometryProxy) * 15)
-                                                            )
-                                                            .offset(
-                                                                x: index % 2 == 0 ? -15 : 15,
-                                                                y: CGFloat(index) * 15
-                                                            )
-                                                    }
-                                                    .matchedGeometryEffect(id: index.id, in: namespace)
-                                                //                        .onTapGesture {
-                                                //                                       if isLastCard {
-                                                //                                           gameViewModel.slotTapped(slotNum: SlotCode.braid.rawValue)
-                                                //                                           gameViewModel.autoCollect()
-                                                //                                       }
-                                                //                                   }
-                                            }
-                    }.frame( maxHeight: .infinity, alignment: .topLeading)
-                                            .padding(20)
-                    }
+                    
+                    //schreiben tap fur der letzte
+                    ForEach(gameViewModel.slots[SlotCode.braid.rawValue].indices, id: \.self) { index in
+                        let isLastCard = index == gameViewModel.slots[SlotCode.braid.rawValue].indices.last
+                        let cardPicture = gameViewModel.slots[SlotCode.braid.rawValue][index].picture
+                    CardView(image: cardPicture)
+                        .visualEffect { @MainActor content, geometryProxy in
+                            content
+                                .rotationEffect(
+                                    Angle(degrees: index % 2 == 0 ? progress(geometryProxy) * -15 : progress(geometryProxy) * 15)
+                                )
+                                .offset(
+                                    x: index % 2 == 0 ? -15 : 15,
+                                    y: CGFloat(index) * 15
+                                )
+                        }
+                        .matchedGeometryEffect(id: gameViewModel.slots[SlotCode.braid.rawValue][index].id, in: namespace)
+                        .onTapGesture {
+                                       if isLastCard {
+                                           // Perform your desired action here
+                                           gameViewModel.slotTapped(slotNum: 14)
+                                       }
+                                   }
                 }
+                }.frame( maxHeight: .infinity, alignment: .topLeading)
+                    .padding(20)
+            }
                 // CORNERS
                 VStack{
                     LazyVGrid(columns: [GridItem(.fixed(70))], spacing: 2) {
@@ -175,13 +175,11 @@ struct GameView: View {
                                 }
                         } else {
                             ForEach(gameViewModel.slots[SlotCode.closedDeck.rawValue]) { card in
-                                CardView(image: card.picture)
+                                EmptyCardView(opacity: 0.0, apiImage: viewModel.randomImage, apiImageURL: viewModel.randomImage?.largeImageURL)
                                     .clipShape(RoundedRectangle(cornerRadius: 10))
-                                    .matchedGeometryEffect(id: card.id, in: namespace)
                                     .onTapGesture {
                                         withAnimation(.easeInOut) {
                                             gameViewModel.slotTapped(slotNum: SlotCode.closedDeck.rawValue)
-                                            
                                             gameViewModel.autoCollect()
                                             print("closed deck cardtapped")
                                         }

@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		1A32A6E32CECC9B900BC4CE7 /* EmptyCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A32A6E22CECC9B900BC4CE7 /* EmptyCardView.swift */; };
 		1A32A6E52CECD37500BC4CE7 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A32A6E42CECD37500BC4CE7 /* CardView.swift */; };
+		1A32A6E72CED1FC400BC4CE7 /* CollectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A32A6E62CED1FC400BC4CE7 /* CollectionsView.swift */; };
+		1A32A6E92CED1FE800BC4CE7 /* BraidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A32A6E82CED1FE800BC4CE7 /* BraidView.swift */; };
+		1A32A6EB2CED1FFC00BC4CE7 /* CornersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A32A6EA2CED1FFC00BC4CE7 /* CornersView.swift */; };
+		1A32A6EE2CED202E00BC4CE7 /* HelpersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A32A6ED2CED202E00BC4CE7 /* HelpersView.swift */; };
+		1A32A6F02CED204700BC4CE7 /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A32A6EF2CED204700BC4CE7 /* DeckView.swift */; };
+		1A32A6F22CED206200BC4CE7 /* ControlButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A32A6F12CED206200BC4CE7 /* ControlButtonsView.swift */; };
 		1A47D8EE2CE348B8000016DB /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A47D8ED2CE348B8000016DB /* Utils.swift */; };
 		1A47D8F02CE4E8EE000016DB /* ApiRemoteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A47D8EF2CE4E8EE000016DB /* ApiRemoteRepository.swift */; };
 		1A47D8F22CE4EA9A000016DB /* Hit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A47D8F12CE4EA9A000016DB /* Hit.swift */; };
@@ -33,6 +39,12 @@
 /* Begin PBXFileReference section */
 		1A32A6E22CECC9B900BC4CE7 /* EmptyCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCardView.swift; sourceTree = "<group>"; };
 		1A32A6E42CECD37500BC4CE7 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		1A32A6E62CED1FC400BC4CE7 /* CollectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionsView.swift; sourceTree = "<group>"; };
+		1A32A6E82CED1FE800BC4CE7 /* BraidView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BraidView.swift; sourceTree = "<group>"; };
+		1A32A6EA2CED1FFC00BC4CE7 /* CornersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornersView.swift; sourceTree = "<group>"; };
+		1A32A6ED2CED202E00BC4CE7 /* HelpersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpersView.swift; sourceTree = "<group>"; };
+		1A32A6EF2CED204700BC4CE7 /* DeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckView.swift; sourceTree = "<group>"; };
+		1A32A6F12CED206200BC4CE7 /* ControlButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlButtonsView.swift; sourceTree = "<group>"; };
 		1A47D8ED2CE348B8000016DB /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		1A47D8EF2CE4E8EE000016DB /* ApiRemoteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRemoteRepository.swift; sourceTree = "<group>"; };
 		1A47D8F12CE4EA9A000016DB /* Hit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hit.swift; sourceTree = "<group>"; };
@@ -116,6 +128,12 @@
 				1A56D6562CD3B816001C3428 /* WelcomeView.swift */,
 				1A56D6582CD3B856001C3428 /* HomeView.swift */,
 				1A6A1A352CE93420001E6B32 /* InstructionsView.swift */,
+				1A32A6E62CED1FC400BC4CE7 /* CollectionsView.swift */,
+				1A32A6E82CED1FE800BC4CE7 /* BraidView.swift */,
+				1A32A6EA2CED1FFC00BC4CE7 /* CornersView.swift */,
+				1A32A6ED2CED202E00BC4CE7 /* HelpersView.swift */,
+				1A32A6EF2CED204700BC4CE7 /* DeckView.swift */,
+				1A32A6F12CED206200BC4CE7 /* ControlButtonsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -246,20 +264,26 @@
 			files = (
 				1A56D65B2CD3B881001C3428 /* GameViewModel.swift in Sources */,
 				1A6A1A362CE93420001E6B32 /* InstructionsView.swift in Sources */,
+				1A32A6E72CED1FC400BC4CE7 /* CollectionsView.swift in Sources */,
 				1A47D8EE2CE348B8000016DB /* Utils.swift in Sources */,
 				1A56D6602CD3B935001C3428 /* DataManager.swift in Sources */,
 				1A651DF32CD26381002B4213 /* ContentView.swift in Sources */,
 				1A47D8F62CE4FA1F000016DB /* ApiViewModel.swift in Sources */,
 				1A56D6552CD3B806001C3428 /* GameView.swift in Sources */,
 				1A32A6E52CECD37500BC4CE7 /* CardView.swift in Sources */,
+				1A32A6E92CED1FE800BC4CE7 /* BraidView.swift in Sources */,
 				1A56D6622CD3BC76001C3428 /* CardsRepository.swift in Sources */,
+				1A32A6F02CED204700BC4CE7 /* DeckView.swift in Sources */,
 				1A651DF12CD26381002B4213 /* BraidSolitaireApp.swift in Sources */,
 				1A56D6592CD3B856001C3428 /* HomeView.swift in Sources */,
+				1A32A6EB2CED1FFC00BC4CE7 /* CornersView.swift in Sources */,
 				1A32A6E32CECC9B900BC4CE7 /* EmptyCardView.swift in Sources */,
 				1A56D65D2CD3B8BD001C3428 /* ApiRepository.swift in Sources */,
 				1A6A1A3A2CEAA04E001E6B32 /* SlotCode.swift in Sources */,
+				1A32A6EE2CED202E00BC4CE7 /* HelpersView.swift in Sources */,
 				1A56D6572CD3B816001C3428 /* WelcomeView.swift in Sources */,
 				1A47D8F22CE4EA9A000016DB /* Hit.swift in Sources */,
+				1A32A6F22CED206200BC4CE7 /* ControlButtonsView.swift in Sources */,
 				1A47D8F02CE4E8EE000016DB /* ApiRemoteRepository.swift in Sources */,
 				1A56D6642CD3CF24001C3428 /* Card.swift in Sources */,
 				1A47D8F42CE4EBBF000016DB /* Hits.swift in Sources */,
