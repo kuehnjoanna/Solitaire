@@ -4,7 +4,6 @@
 //
 //  Created by Joanna Kühn on 31.10.24.
 //
-//should we call move function movetoacollection?
 import Foundation
 import SwiftUI
 
@@ -20,7 +19,9 @@ class GameViewModel: ObservableObject{
     init(){
         start()
     }
-    enum slotCode: Int {
+    
+    //change this enum for the other one - delete it
+            enum slotCode: Int {
             case closedDeck = 0
             case openDeck = 1
             case helpersFirst = 2
@@ -90,7 +91,9 @@ class GameViewModel: ObservableObject{
             }
         }
         func unmove(){
+            if moveHistory.isEmpty {return}
             let moveCode = moveHistory.removeLast()
+            print(moveCode)
             if moveCode == -1 {
                 // Special move to redeal, we give back the right to redeal
                 redeals += 1
@@ -152,14 +155,8 @@ class GameViewModel: ObservableObject{
         return false
     }
     func slotTapped(slotNum: Int){
-        // we don't do anything if an empty slot is tapped
-        if slots[slotNum].isEmpty {return}
         
-        // we don't do anything if a collection slot is tapped
-        // works if the collections are the last on slots
-        if slotNum >= slotCode.collectionsFirst.rawValue {return}
-        
-        if slotNum == slotCode.closedDeck.rawValue{
+            if slotNum == slotCode.closedDeck.rawValue{
             // if there's a card in closedDeck, we open and move it
             if slots[slotNum].count > 0 {
                 move(from: slotCode.closedDeck.rawValue, to: slotCode.openDeck.rawValue)
@@ -184,6 +181,12 @@ class GameViewModel: ObservableObject{
             
             return
         }
+        // we don't do anything if an empty slot is tapped
+        if slots[slotNum].isEmpty {return}
+        
+        // we don't do anything if a collection slot is tapped
+        // works if the collections are the last on slots
+        if slotNum >= slotCode.collectionsFirst.rawValue {return}
         
         // We already eliminited collections to come here, anything else can be collected
         // We also know that slot is not empty

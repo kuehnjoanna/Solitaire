@@ -19,6 +19,7 @@ class ApiViewModel: ObservableObject {
     
     init(repository: ApiRemoteRepository = ApiRemoteRepository()) {
         self.repository = repository
+        fetchImages()
     }
     
     func fetchImages() {
