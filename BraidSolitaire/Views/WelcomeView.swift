@@ -19,8 +19,8 @@ struct WelcomeView: View {
              CollectionsView( namespace: namespace).environmentObject(gameViewModel).environmentObject(viewModel)
              
              // Braid
-             BraidView(namespace: namespace).environmentObject(gameViewModel)
-             
+             BraidView( namespace: namespace).environmentObject(gameViewModel)
+
              // Corners
              CornersView(namespace: namespace).environmentObject(gameViewModel).environmentObject(viewModel)
              

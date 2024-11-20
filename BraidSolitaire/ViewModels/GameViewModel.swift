@@ -56,9 +56,9 @@ class GameViewModel: ObservableObject{
                 //adding cards to the deck
            //     slots[slotCode.closedDeck.rawValue] = shuffledDeck
                 addCards(range: 0...shuffledDeck.count, list: &slots[slotCode.closedDeck.rawValue], listName: "closed deck")
-                dump(slots)
+                
             }
-
+            dump(slots)
         }
     func shuffleCardDeck(){
         let shuffledCards: [Card] = cardsRepo.doubleDeck.shuffled()

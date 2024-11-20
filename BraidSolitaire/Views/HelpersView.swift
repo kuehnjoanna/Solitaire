@@ -21,9 +21,10 @@ struct HelpersView: View {
                             .matchedGeometryEffect(id: gameViewModel.slots[index].last!.id, in: namespace)
                             .onTapGesture {
                                 withAnimation(.easeInOut) {
+                                    
+                                    print("cardtapped id\(gameViewModel.slots[index].last?.id)")
                                     gameViewModel.slotTapped(slotNum: index)
                                     gameViewModel.autoCollect()
-                                    print("cardtapped id\(index)")
                                 }
                             }
                     } else {

@@ -29,9 +29,14 @@ struct CollectionsView: View {
                                     .aspectRatio(contentMode: .fill)
                                     .frame(width: 40, height: 60)
                                     .clipShape(RoundedRectangle(cornerRadius: 10))
+
                             )
                             .frame(width: 40, height: 60)
-                            .matchedGeometryEffect(id: gameViewModel.slots[index].last!.id, in: namespace)
+                            .matchedGeometryEffect(id: gameViewModel.slots[index].last!.id, in: namespace)  
+                            .onTapGesture {
+                                    print("id in the collections: \(gameViewModel.slots[index].last!.id)")
+                                
+                            }
                     } else {
                         EmptyCardView(opacity: 0.5, apiImage: viewModel.randomImage, apiImageURL: viewModel.randomImage?.largeImageURL)
                             .clipShape(RoundedRectangle(cornerRadius: 10))

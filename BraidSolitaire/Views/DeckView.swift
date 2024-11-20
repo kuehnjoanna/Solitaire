@@ -29,7 +29,7 @@ struct DeckView: View {
                                 withAnimation(.easeInOut) {
                                     gameViewModel.slotTapped(slotNum: SlotCode.openDeck.rawValue)
                                     gameViewModel.autoCollect()
-                                    print("open deck cardtapped")
+                                    print("open deck cardtapped \(card.id)")
                                 }
                             }
                     }
@@ -56,7 +56,7 @@ struct DeckView: View {
                                 withAnimation(.easeInOut) {
                                     gameViewModel.slotTapped(slotNum: SlotCode.closedDeck.rawValue)
                                     gameViewModel.autoCollect()
-                                    print("closed deck cardtapped")
+                                    print("closed deck cardtapped \(card.id)")
                                 }
                             }
                     }
