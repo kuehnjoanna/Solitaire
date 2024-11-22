@@ -11,16 +11,16 @@ struct ControlButtonsView: View {
     @EnvironmentObject    var gameViewModel: GameViewModel
     
     var body: some View {
-        VStack {
+       HStack {
             Button("undo") {
                 print(gameViewModel.moveHistory)
                 gameViewModel.unmove()
                 print(gameViewModel.moveHistory)
             }
-            Button("move card") {
+            Button("move") {
                 dump(gameViewModel.slots[SlotCode.braid.rawValue])
             }
-            Button("shuffle card deck") {
+            Button("deck") {
                 withAnimation(.bouncy) {
                     // gameViewModel.initializeCards()
                 }

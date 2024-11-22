@@ -6,14 +6,14 @@
 //
 
 import Foundation
-struct Card: Identifiable, Hashable {
+struct Card: Identifiable, Hashable, Codable {
     var id = UUID()
     var suit: Suit
     var rank: Int
     var picture: String
 }
 
-enum Suit{
+enum Suit: Codable{
     case Club, Spade, Heart, Diamond
 }
 

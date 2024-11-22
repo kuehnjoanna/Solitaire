@@ -11,9 +11,33 @@ struct DeckView: View {
    @EnvironmentObject var gameViewModel: GameViewModel
     @EnvironmentObject  var viewModel: ApiViewModel
     var namespace: Namespace.ID
-    
+
     var body: some View {
         VStack {
+            VStack {
+                // Display minutes and seconds
+                Text(gameViewModel.timeString(from: gameViewModel.timePassed))
+                    .font(.title)
+                
+                // Start/Stop Button
+//                Button(action: {
+//                    if gameViewModel.isRunning {
+//                        gameViewModel.stopTimer()
+//                        print(gameViewModel.timePassed)
+//                    } else {
+//                        gameViewModel.startTimer()
+//                        
+//                    }
+//                }) {
+//                    Text(gameViewModel.isRunning ? "Stop" : "Start")
+//                        .font(.title)
+//                        .padding()
+//                        .background(gameViewModel.isRunning ? Color.red : Color.green)
+//                        .foregroundColor(.white)
+//                        .cornerRadius(10)
+//                }
+            }
+            .padding()
             ControlButtonsView().environmentObject(gameViewModel)
             
             // Open Deck
@@ -64,7 +88,7 @@ struct DeckView: View {
                 }
             }
         }
-        .frame(width: UIScreen.main.bounds.width * 0.3)
+       // .frame(width: UIScreen.main.bounds.width * 0.2)
     }
 }
 

@@ -6,20 +6,108 @@
 //
 import Foundation
 import SwiftUI
+import SwiftData
 
 class GameViewModel: ObservableObject{
-    
     private var cardsRepo = CardsRepository()
     @Published var slots = [[Card]]()
-     @Published   var moveHistory = [Int]()
-      @Published  var startingRank = 5
+    @Published   var moveHistory = [Int]()
+    @Published  var startingRank = 5
+    @Published var isItOver = false
+    @Published  var isRunning = false
+    @Published  var timePassed: TimeInterval = 0
     var redeals = 3
-    
+    private  var timer: Timer? = nil
+    @AppStorage("currentTime")
+    private var storedTime: TimeInterval = 0
+    var stats = [GameResults]()
+    var moves = 0
     @Published var shuffledDeck : [Card] = []
-    init(){
+    //////
+    private var context: ModelContext
+    /////////////
+    init(context: ModelContext){
+       
+        self.context = context
+        fetchResults()
         start()
+        
+        if gameInProgress {
+            restoreGameState()
+        } else {
+            start()
+        }
+    }
+    // storing game in case app goes inactive
+    @AppStorage("savedMoves") 
+    private var savedMoves: Int = 0
+    @AppStorage("savedMoveHistory") 
+    private var savedMoveHistory: Data?
+    @AppStorage("savedSlots") 
+    private var savedSlots: Data?
+    @AppStorage("savedShuffledDeck") 
+    private var savedShuffledDeck: Data?
+    @AppStorage("savedRedeals") 
+    private var savedRedeals: Int = 3
+    @AppStorage("gameInProgress") 
+    private var gameInProgress: Bool = false
+
+    
+    func saveGameState() {
+        do {
+            gameInProgress = true
+            storedTime = timePassed
+            savedMoves = moves
+            savedMoveHistory = try JSONEncoder().encode(moveHistory)
+            savedSlots = try JSONEncoder().encode(slots)
+            savedShuffledDeck = try JSONEncoder().encode(shuffledDeck)
+            savedRedeals = redeals
+        } catch {
+            print("Error saving game state: \(error)")
+        }
+    }
+
+    func restoreGameState() {
+        do {
+            timePassed = storedTime
+            moves = savedMoves
+            moveHistory = try JSONDecoder().decode([Int].self, from: savedMoveHistory ?? Data())
+            slots = try JSONDecoder().decode([[Card]].self, from: savedSlots ?? Data())
+            shuffledDeck = try JSONDecoder().decode([Card].self, from: savedShuffledDeck ?? Data())
+            redeals = savedRedeals
+        } catch {
+            print("Error restoring game state: \(error)")
+            start() // Start a new game if restore fails
+        }
+    }
+
+    func clearSavedGameState() {
+        gameInProgress = false
+        storedTime = 0
+        savedMoves = 0
+        savedMoveHistory = nil
+        savedSlots = nil
+        savedShuffledDeck = nil
+        savedRedeals = 3
+    }
+    //
+
+    
+    func fetchResults(){
+        do {
+           let request = FetchDescriptor<GameResults>()
+            let fetchedResults = try context.fetch(request)
+            stats = fetchedResults
+        } catch {
+            print("error fetching stats: \(error.localizedDescription)")
+        }
     }
     
+    func addResults(result: GameResults) {
+        context.insert(result)
+        print("Adding result: \(result)")
+    }
+/////////////
     //change this enum for the other one - delete it
             enum slotCode: Int {
             case closedDeck = 0
@@ -30,36 +118,42 @@ class GameViewModel: ObservableObject{
             case collectionsFirst = 15
             
         }
-        func start(){
-            
-             //var slots = [[Card]]()
-            slots = Array(repeating: [], count: 23)
-            moveHistory.removeAll()
-          //  startingRank = 5
-            shuffleCardDeck()
-            for _ in 0...22{
-               // slots.append([Card]())
-                //slots.append([deck2[i]])
-                //adding cards to the Helpers slots
-                for i in slotCode.helpersFirst.rawValue...(slotCode.cornersFirst.rawValue - 1){
-                    addCards(range: 0...0, list: &slots[i], listName: "helpers")
-                }
-                //adding cards to the corners slots
-                for i in slotCode.cornersFirst.rawValue...(slotCode.braid.rawValue - 1){
-                    addCards(range: 0...0, list: &slots[i], listName: "corners")
-                }
-                //adding to the braid slot
-                addCards(range: 0...19, list: &slots[slotCode.braid.rawValue], listName: "braid")
-                //adding one card to the collection
-                addCards(range: 0...0, list: &slots[slotCode.collectionsFirst.rawValue], listName: "collection")
-                startingRank = slots[slotCode.collectionsFirst.rawValue].first!.rank
-                //adding cards to the deck
-           //     slots[slotCode.closedDeck.rawValue] = shuffledDeck
-                addCards(range: 0...shuffledDeck.count, list: &slots[slotCode.closedDeck.rawValue], listName: "closed deck")
-                
+    func startGamesTimer(){
+        isItOver  = true
+        startTimer()
+    }
+    func start(){
+        storedTime = 0 // Reset stored time
+        timePassed = 0
+        moves = 0
+            //var slots = [[Card]]()
+        slots = Array(repeating: [], count: 23)
+        moveHistory.removeAll()
+        //  startingRank = 5
+        shuffleCardDeck()
+        for _ in 0...22{
+            // slots.append([Card]())
+            //slots.append([deck2[i]])
+            //adding cards to the Helpers slots
+            for i in slotCode.helpersFirst.rawValue...(slotCode.cornersFirst.rawValue - 1){
+                addCards(range: 0...0, list: &slots[i], listName: "helpers")
             }
-            dump(slots)
+            //adding cards to the corners slots
+            for i in slotCode.cornersFirst.rawValue...(slotCode.braid.rawValue - 1){
+                addCards(range: 0...0, list: &slots[i], listName: "corners")
+            }
+            //adding to the braid slot
+            addCards(range: 0...19, list: &slots[slotCode.braid.rawValue], listName: "braid")
+            //adding one card to the collection
+            addCards(range: 0...0, list: &slots[slotCode.collectionsFirst.rawValue], listName: "collection")
+            startingRank = slots[slotCode.collectionsFirst.rawValue].first!.rank
+            //adding cards to the deck
+        //     slots[slotCode.closedDeck.rawValue] = shuffledDeck
+            addCards(range: 0...shuffledDeck.count, list: &slots[slotCode.closedDeck.rawValue], listName: "closed deck")
+            
         }
+        dump(slots)
+    }
     func shuffleCardDeck(){
         let shuffledCards: [Card] = cardsRepo.doubleDeck.shuffled()
         shuffledDeck = shuffledCards
@@ -75,79 +169,84 @@ class GameViewModel: ObservableObject{
         }
         print("\(listName): \(list.count)")
     }
-        func move(from source: Int, to target: Int){
-            moveHistory.append(source*100 + target)
-            transferTheCard(from: source, to: target)
-            // if a corner cell is emptied, we need to automatically replace it from braid
-            if NSRange(location: slotCode.cornersFirst.rawValue, length: 4).contains(source) {
-                // yep... our suspician was correct, it WAS a corner cell. Now it's empty...
-                // the source of the previous move is our new target, we fill it from braid, if braid is not empty
-                if slots[slotCode.braid.rawValue].isEmpty {
-                    //braid is depleted, we will leave the corner empty
-                    return
-                }
-                // braid still has at least 1 card, we put it to the just emptied corner cell, which is "source" of the last move
-                move(from: slotCode.braid.rawValue, to: source)
-            }
-        }
-        func unmove(){
-            if moveHistory.isEmpty {return}
-            let moveCode = moveHistory.removeLast()
-            print(moveCode)
-            if moveCode == -1 {
-                // Special move to redeal, we give back the right to redeal
-                redeals += 1
-                // we reverse the closed deck and open it
-                slots[slotCode.openDeck.rawValue] = slots[slotCode.closedDeck.rawValue].reversed()
-                slots[slotCode.closedDeck.rawValue].removeAll()
+    func move(from source: Int, to target: Int){
+        moveHistory.append(source*100 + target)
+        transferTheCard(from: source, to: target)
+        // if a corner cell is emptied, we need to automatically replace it from braid
+        if NSRange(location: slotCode.cornersFirst.rawValue, length: 4).contains(source) {
+            // yep... our suspician was correct, it WAS a corner cell. Now it's empty...
+            // the source of the previous move is our new target, we fill it from braid, if braid is not empty
+            if slots[slotCode.braid.rawValue].isEmpty {
+                //braid is depleted, we will leave the corner empty
                 return
             }
-            transferTheCard(from: moveCode%100, to: moveCode/100)
-            
-            // wait! before we leave... if the move was done from braid to the corners it means it was an automated move
-            // taking it back would leave the corner empty, we need to take one more back so the corner card is not played yet
-            if moveCode/100 == slotCode.braid.rawValue
-                && NSRange(location: slotCode.cornersFirst.rawValue, length: 4).contains(moveCode%100){
-                // source is braid, target is one of corner slots, we take one more move back
-                unmove()
-            }
-        }
-        func transferTheCard(from: Int, to: Int){
-            // Animations
-            let card = slots[from].removeLast() //cant remove last element from an empty collection
-            slots[to].append(card)
-        }
-    /// this is called if the card is not of starting rank\
-        func findFirstEmptyCollectionSlot() -> Int{
-          //  var emptySlot = 0
-            for i in 0...7{
-                if slots[ slotCode.collectionsFirst.rawValue + i].isEmpty{
-                    return slotCode.collectionsFirst.rawValue + i
+            // braid still has at least 1 card, we put it to the just emptied corner cell, which is "source" of the last move
+            // Fixing animation bug by slowing transition from braid to empty corner
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                withAnimation(){
+                    self.move(from: slotCode.braid.rawValue, to: source)
                 }
-            }
-            fatalError("There are more than 8 starting rank cards")
         }
-        func findFirstCollectionSlotThatCanAccept(card: Card) -> Int?{
-            for i in 0...7{
-                let index = i + slotCode.collectionsFirst.rawValue
-                // if we reached an empty slot, that means we couldn't find anything suitable
-                if slots[index].isEmpty {return nil}
-                
-                // if the slot is already full, we move on and check the next
-                if slots[index].count == 13 {continue}
-                
-                // if the suits don't match, we move on
-                if slots[index].last!.suit != card.suit {continue}
-                
-                // what do we know here? current index we are checking, is not empty, not full, same rank
-                if canFollow(slots[index].last!.rank, card.rank){return index}
-                
-                // not a number that can follow we continue
-                continue // not necessary since it's already the end of for loop :)
-            }
-            // we are out of the loop and we haven't returned yet, it means we couldn't find a suitable slot
-            return nil
         }
+    }
+    func unmove(){
+        if moveHistory.isEmpty {return}
+        let moveCode = moveHistory.removeLast()
+        print(moveCode)
+        if moveCode == -1 {
+            // Special move to redeal, we give back the right to redeal
+            redeals += 1
+            // we reverse the closed deck and open it
+            slots[slotCode.openDeck.rawValue] = slots[slotCode.closedDeck.rawValue].reversed()
+            slots[slotCode.closedDeck.rawValue].removeAll()
+            return
+        }
+        transferTheCard(from: moveCode%100, to: moveCode/100)
+        
+        // wait! before we leave... if the move was done from braid to the corners it means it was an automated move
+        // taking it back would leave the corner empty, we need to take one more back so the corner card is not played yet
+        if moveCode/100 == slotCode.braid.rawValue
+            && NSRange(location: slotCode.cornersFirst.rawValue, length: 4).contains(moveCode%100){
+            // source is braid, target is one of corner slots, we take one more move back
+            unmove()
+        }
+    }
+    func transferTheCard(from: Int, to: Int){
+        // Animations
+        let card = slots[from].removeLast() //cant remove last element from an empty collection
+        slots[to].append(card)
+    }
+    /// this is called if the card is not of starting rank\
+    func findFirstEmptyCollectionSlot() -> Int{
+        //  var emptySlot = 0
+        for i in 0...7{
+            if slots[ slotCode.collectionsFirst.rawValue + i].isEmpty{
+                return slotCode.collectionsFirst.rawValue + i
+            }
+        }
+        fatalError("There are more than 8 starting rank cards")
+    }
+    func findFirstCollectionSlotThatCanAccept(card: Card) -> Int?{
+        for i in 0...7{
+            let index = i + slotCode.collectionsFirst.rawValue
+            // if we reached an empty slot, that means we couldn't find anything suitable
+            if slots[index].isEmpty {return nil}
+            
+            // if the slot is already full, we move on and check the next
+            if slots[index].count == 13 {continue}
+            
+            // if the suits don't match, we move on
+            if slots[index].last!.suit != card.suit {continue}
+            
+            // what do we know here? current index we are checking, is not empty, not full, same rank
+            if canFollow(slots[index].last!.rank, card.rank){return index}
+            
+            // not a number that can follow we continue
+            continue // not necessary since it's already the end of for loop :)
+        }
+        // we are out of the loop and we haven't returned yet, it means we couldn't find a suitable slot
+        return nil
+    }
     func canFollow(_ first: Int, _ next: Int)->Bool{
         // Ace is allowed after King
         if first == 13 && next == 1 {return true}
@@ -225,13 +324,17 @@ class GameViewModel: ObservableObject{
             
             // braid is depleted, we can use corners if there's an empty one
             if let emptyCorner = findFirstEmptySlot(starting: slotCode.cornersFirst.rawValue, count: 4){
-                move(from: slotNum, to: emptyCorner)
+            
+                    move(from: slotNum, to: emptyCorner)
+                
                 return
             }
             
         }
         
         // I think that's it
+        moves = moves + 1
+        print("function slot tapped, moves: \(moves)")
         return
     }
     
@@ -251,6 +354,7 @@ class GameViewModel: ObservableObject{
             }
         }
         if fullCollectionSlots == 8 {
+
             return true
         }
         return false
@@ -266,7 +370,18 @@ class GameViewModel: ObservableObject{
                 //just tap everything like crazy, no need to do any calculations
                 for i in 0..<slotCode.collectionsFirst.rawValue { // if collections are last
                     slotTapped(slotNum: i)
+                    // Telling that the game is over
+                    isItOver = true
+
+                    //calll animations function?
+                    // save time
                 }
+                stopTimer()
+
+              
+                let newResult = GameResults(time: timePassed, moves: moves)
+                 addResults(result: newResult)
+                print("function isGameOver, newResult: \(newResult)")
             }
         }
     }
@@ -276,5 +391,31 @@ class GameViewModel: ObservableObject{
             unmove()
         }
     }
+    
+    // Converts time to "MM:SS" format
+    func timeString(from interval: TimeInterval) -> String {
+      //  currentTime = interval
+        let minutes = Int(interval) / 60
+        let seconds = Int(interval) % 60
+        return String(format: "%02d:%02d", minutes, seconds)
+    }
+    
+    // Start timer
+    func startTimer() {
+        isRunning = true
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+            self.timePassed += 1
+         
+        }
+    }
+    
+    // Stop timer
+    func stopTimer() {
+        isRunning = false
+        timer?.invalidate()
+        timer = nil
+        storedTime = timePassed
+    }
+
 
 }

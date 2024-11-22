@@ -21,6 +21,7 @@ struct BraidView: View {
                     CardView(image: cardPicture)
                     
                     .matchedGeometryEffect(id: gameViewModel.slots[SlotCode.braid.rawValue][index].id, in: namespace)
+                    .offset(y: 15)
                         .visualEffect { @MainActor content, geometryProxy in
                             content
                                 .rotationEffect(
@@ -28,7 +29,7 @@ struct BraidView: View {
                                 )
                                 .offset(
                                     x: index % 2 == 0 ? 15 : -15,
-                                    y: CGFloat(index) * 15
+                                    y: CGFloat(index) * 12
                                 )
                         }
                         .onTapGesture {
@@ -44,7 +45,7 @@ struct BraidView: View {
                 }
             }
             .frame(maxHeight: .infinity, alignment: .topLeading)
-            .padding(20)
+          //  .padding(.horizontal, 20)
         }
     }
 }

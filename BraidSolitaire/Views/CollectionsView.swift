@@ -37,6 +37,7 @@ struct CollectionsView: View {
                                     print("id in the collections: \(gameViewModel.slots[index].last!.id)")
                                 
                             }
+                            //.offset(isGameOver ? animationData : 0.0)
                     } else {
                         EmptyCardView(opacity: 0.5, apiImage: viewModel.randomImage, apiImageURL: viewModel.randomImage?.largeImageURL)
                             .clipShape(RoundedRectangle(cornerRadius: 10))

@@ -8,8 +8,19 @@
 import SwiftUI
 
 struct HomeView: View {
+    
+    @EnvironmentObject var gameViewModel: GameViewModel
+    @StateObject private var viewModel = ApiViewModel()
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack{
+            NavigationLink(destination: GameView().environmentObject(gameViewModel).environmentObject(viewModel)){
+                Text("game view")
+        }
+            NavigationLink(destination: WelcomeView().environmentObject(gameViewModel).environmentObject(viewModel)){
+                Text("Best Scores")
+        }
+        }
     }
 }
 

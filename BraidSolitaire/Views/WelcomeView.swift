@@ -6,30 +6,38 @@
 //
 
 import SwiftUI
+import SwiftData
 
 
 struct WelcomeView: View {
-    @StateObject var gameViewModel = GameViewModel()
-     @StateObject var viewModel = ApiViewModel()
-     @Namespace var namespace
-     
-     var body: some View {
-         HStack(alignment: .center) {
-             // Collections
-             CollectionsView( namespace: namespace).environmentObject(gameViewModel).environmentObject(viewModel)
-             
-             // Braid
-             BraidView( namespace: namespace).environmentObject(gameViewModel)
 
-             // Corners
-             CornersView(namespace: namespace).environmentObject(gameViewModel).environmentObject(viewModel)
-             
-             // Helpers
-             HelpersView(namespace: namespace).environmentObject(gameViewModel).environmentObject(viewModel)
-             
-             // Open & Closed Decks with Control Buttons
-             DeckView(namespace: namespace).environmentObject(gameViewModel).environmentObject(viewModel)
-         }
+    @EnvironmentObject var gameViewModel: GameViewModel
+     @EnvironmentObject  var viewModel: ApiViewModel
+     @Namespace var namespace
+    
+
+    var body: some View {
+        VStack(alignment: .center) {
+            Text("Leaderboard")
+            ScrollView{
+                let sortedResults = gameViewModel.stats.sorted {
+                    if $0.time != $1.time {
+                        return $0.time < $1.time // Sort by fastest time first
+                    } else {
+                        return $0.moves < $1.moves // If time is the same, sort by least moves
+                    }
+                }
+                ForEach(0...10,  id: \.self){ index in
+                
+                HStack{
+                    Text("\(index). Time: \(gameViewModel.timeString(from: sortedResults[index].time))")
+                    Spacer()
+                    Text("Moves: \(sortedResults[index].moves)")
+                }
+                .padding(.horizontal, 80)
+            }
+        }.padding(.horizontal, 80)
+    }
      }
     
 }
