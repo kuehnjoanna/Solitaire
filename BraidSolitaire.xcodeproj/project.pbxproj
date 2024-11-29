@@ -21,8 +21,8 @@
 		1A47D8F42CE4EBBF000016DB /* Hits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A47D8F32CE4EBBF000016DB /* Hits.swift */; };
 		1A47D8F62CE4FA1F000016DB /* ApiViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A47D8F52CE4FA1F000016DB /* ApiViewModel.swift */; };
 		1A56D6552CD3B806001C3428 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56D6542CD3B806001C3428 /* GameView.swift */; };
-		1A56D6572CD3B816001C3428 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56D6562CD3B816001C3428 /* WelcomeView.swift */; };
-		1A56D6592CD3B856001C3428 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56D6582CD3B856001C3428 /* HomeView.swift */; };
+		1A56D6572CD3B816001C3428 /* BestScoresView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56D6562CD3B816001C3428 /* BestScoresView.swift */; };
+		1A56D6592CD3B856001C3428 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56D6582CD3B856001C3428 /* MenuView.swift */; };
 		1A56D65B2CD3B881001C3428 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56D65A2CD3B881001C3428 /* GameViewModel.swift */; };
 		1A56D65D2CD3B8BD001C3428 /* ApiRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56D65C2CD3B8BD001C3428 /* ApiRepository.swift */; };
 		1A56D6622CD3BC76001C3428 /* CardsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56D6612CD3BC76001C3428 /* CardsRepository.swift */; };
@@ -33,8 +33,14 @@
 		1A651DF82CD26383002B4213 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A651DF72CD26383002B4213 /* Preview Assets.xcassets */; };
 		1A6A1A362CE93420001E6B32 /* InstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6A1A352CE93420001E6B32 /* InstructionsView.swift */; };
 		1A6A1A3A2CEAA04E001E6B32 /* SlotCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A6A1A392CEAA04E001E6B32 /* SlotCode.swift */; };
+		1A76DFD12CFA0F16001F0270 /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A76DFD02CFA0F16001F0270 /* ButtonView.swift */; };
+		1A76DFD32CFA285C001F0270 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A76DFD22CFA285C001F0270 /* BackgroundView.swift */; };
+		1A76DFD52CFA6C8B001F0270 /* ModalWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A76DFD42CFA6C8B001F0270 /* ModalWindowView.swift */; };
 		1A7D1ABD2CEF68BC003A0BF1 /* GameResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7D1ABC2CEF68BC003A0BF1 /* GameResults.swift */; };
 		1A7D1ABF2CEFCB19003A0BF1 /* ModelContextProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7D1ABE2CEFCB19003A0BF1 /* ModelContextProvider.swift */; };
+		1AAB2E4F2CF90B37006272BA /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AAB2E4E2CF90B37006272BA /* Launch Screen.storyboard */; };
+		1AB9781F2CF9B78800938B53 /* Braid-4.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 1AB9781E2CF9B78800938B53 /* Braid-4.mp4 */; };
+		1AB978212CF9B84800938B53 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB978202CF9B84800938B53 /* SplashScreenView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,8 +58,8 @@
 		1A47D8F32CE4EBBF000016DB /* Hits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hits.swift; sourceTree = "<group>"; };
 		1A47D8F52CE4FA1F000016DB /* ApiViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiViewModel.swift; sourceTree = "<group>"; };
 		1A56D6542CD3B806001C3428 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
-		1A56D6562CD3B816001C3428 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
-		1A56D6582CD3B856001C3428 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		1A56D6562CD3B816001C3428 /* BestScoresView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestScoresView.swift; sourceTree = "<group>"; };
+		1A56D6582CD3B856001C3428 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		1A56D65A2CD3B881001C3428 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
 		1A56D65C2CD3B8BD001C3428 /* ApiRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRepository.swift; sourceTree = "<group>"; };
 		1A56D6612CD3BC76001C3428 /* CardsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsRepository.swift; sourceTree = "<group>"; };
@@ -65,8 +71,15 @@
 		1A651DF72CD26383002B4213 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		1A6A1A352CE93420001E6B32 /* InstructionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsView.swift; sourceTree = "<group>"; };
 		1A6A1A392CEAA04E001E6B32 /* SlotCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotCode.swift; sourceTree = "<group>"; };
+		1A76DFD02CFA0F16001F0270 /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
+		1A76DFD22CFA285C001F0270 /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
+		1A76DFD42CFA6C8B001F0270 /* ModalWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalWindowView.swift; sourceTree = "<group>"; };
 		1A7D1ABC2CEF68BC003A0BF1 /* GameResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameResults.swift; sourceTree = "<group>"; };
 		1A7D1ABE2CEFCB19003A0BF1 /* ModelContextProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelContextProvider.swift; sourceTree = "<group>"; };
+		1AAB2E4D2CF8C2EC006272BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		1AAB2E4E2CF90B37006272BA /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		1AB9781E2CF9B78800938B53 /* Braid-4.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Braid-4.mp4"; sourceTree = "<group>"; };
+		1AB978202CF9B84800938B53 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +133,9 @@
 			children = (
 				1A32A6E22CECC9B900BC4CE7 /* EmptyCardView.swift */,
 				1A32A6E42CECD37500BC4CE7 /* CardView.swift */,
+				1A76DFD02CFA0F16001F0270 /* ButtonView.swift */,
+				1A76DFD22CFA285C001F0270 /* BackgroundView.swift */,
+				1A76DFD42CFA6C8B001F0270 /* ModalWindowView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -127,15 +143,18 @@
 		1A56D6532CD3B7CE001C3428 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				1A56D6562CD3B816001C3428 /* WelcomeView.swift */,
-				1A56D6582CD3B856001C3428 /* HomeView.swift */,
+				1A56D6582CD3B856001C3428 /* MenuView.swift */,
+				1A76DFCF2CF9D812001F0270 /* Menu */,
+				1A56D6562CD3B816001C3428 /* BestScoresView.swift */,
 				1A6A1A352CE93420001E6B32 /* InstructionsView.swift */,
 				1A32A6E62CED1FC400BC4CE7 /* CollectionsView.swift */,
 				1A32A6E82CED1FE800BC4CE7 /* BraidView.swift */,
 				1A32A6EA2CED1FFC00BC4CE7 /* CornersView.swift */,
 				1A32A6ED2CED202E00BC4CE7 /* HelpersView.swift */,
+				1A56D6542CD3B806001C3428 /* GameView.swift */,
 				1A32A6EF2CED204700BC4CE7 /* DeckView.swift */,
 				1A32A6F12CED206200BC4CE7 /* ControlButtonsView.swift */,
+				1AB978202CF9B84800938B53 /* SplashScreenView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -155,6 +174,7 @@
 		1A651DE42CD26381002B4213 = {
 			isa = PBXGroup;
 			children = (
+				1AB9781E2CF9B78800938B53 /* Braid-4.mp4 */,
 				1A651DEF2CD26381002B4213 /* BraidSolitaire */,
 				1A651DEE2CD26381002B4213 /* Products */,
 			);
@@ -171,6 +191,7 @@
 		1A651DEF2CD26381002B4213 /* BraidSolitaire */ = {
 			isa = PBXGroup;
 			children = (
+				1AAB2E4D2CF8C2EC006272BA /* Info.plist */,
 				1A56D65E2CD3B927001C3428 /* Model */,
 				1A56D6532CD3B7CE001C3428 /* Views */,
 				1A56D6522CD3B7C1001C3428 /* Components */,
@@ -179,8 +200,8 @@
 				1A56D64F2CD3B7A9001C3428 /* Local */,
 				1A56D64E2CD3B79C001C3428 /* Remote */,
 				1A651DF02CD26381002B4213 /* BraidSolitaireApp.swift */,
-				1A56D6542CD3B806001C3428 /* GameView.swift */,
 				1A651DF22CD26381002B4213 /* ContentView.swift */,
+				1AAB2E4E2CF90B37006272BA /* Launch Screen.storyboard */,
 				1A651DF42CD26383002B4213 /* Assets.xcassets */,
 				1A651DF62CD26383002B4213 /* Preview Content */,
 			);
@@ -193,6 +214,13 @@
 				1A651DF72CD26383002B4213 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		1A76DFCF2CF9D812001F0270 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Menu;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -253,6 +281,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AB9781F2CF9B78800938B53 /* Braid-4.mp4 in Resources */,
+				1AAB2E4F2CF90B37006272BA /* Launch Screen.storyboard in Resources */,
 				1A651DF82CD26383002B4213 /* Preview Assets.xcassets in Resources */,
 				1A651DF52CD26383002B4213 /* Assets.xcassets in Resources */,
 			);
@@ -271,21 +301,25 @@
 				1A32A6E72CED1FC400BC4CE7 /* CollectionsView.swift in Sources */,
 				1A47D8EE2CE348B8000016DB /* Utils.swift in Sources */,
 				1A651DF32CD26381002B4213 /* ContentView.swift in Sources */,
+				1A76DFD52CFA6C8B001F0270 /* ModalWindowView.swift in Sources */,
+				1A76DFD12CFA0F16001F0270 /* ButtonView.swift in Sources */,
 				1A47D8F62CE4FA1F000016DB /* ApiViewModel.swift in Sources */,
 				1A56D6552CD3B806001C3428 /* GameView.swift in Sources */,
+				1A76DFD32CFA285C001F0270 /* BackgroundView.swift in Sources */,
 				1A32A6E52CECD37500BC4CE7 /* CardView.swift in Sources */,
 				1A7D1ABD2CEF68BC003A0BF1 /* GameResults.swift in Sources */,
 				1A32A6E92CED1FE800BC4CE7 /* BraidView.swift in Sources */,
 				1A56D6622CD3BC76001C3428 /* CardsRepository.swift in Sources */,
 				1A32A6F02CED204700BC4CE7 /* DeckView.swift in Sources */,
 				1A651DF12CD26381002B4213 /* BraidSolitaireApp.swift in Sources */,
-				1A56D6592CD3B856001C3428 /* HomeView.swift in Sources */,
+				1A56D6592CD3B856001C3428 /* MenuView.swift in Sources */,
 				1A32A6EB2CED1FFC00BC4CE7 /* CornersView.swift in Sources */,
 				1A32A6E32CECC9B900BC4CE7 /* EmptyCardView.swift in Sources */,
 				1A56D65D2CD3B8BD001C3428 /* ApiRepository.swift in Sources */,
 				1A6A1A3A2CEAA04E001E6B32 /* SlotCode.swift in Sources */,
 				1A32A6EE2CED202E00BC4CE7 /* HelpersView.swift in Sources */,
-				1A56D6572CD3B816001C3428 /* WelcomeView.swift in Sources */,
+				1AB978212CF9B84800938B53 /* SplashScreenView.swift in Sources */,
+				1A56D6572CD3B816001C3428 /* BestScoresView.swift in Sources */,
 				1A47D8F22CE4EA9A000016DB /* Hit.swift in Sources */,
 				1A32A6F22CED206200BC4CE7 /* ControlButtonsView.swift in Sources */,
 				1A47D8F02CE4E8EE000016DB /* ApiRemoteRepository.swift in Sources */,
@@ -426,9 +460,10 @@
 				DEVELOPMENT_ASSET_PATHS = "\"BraidSolitaire/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BraidSolitaire/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -454,9 +489,10 @@
 				DEVELOPMENT_ASSET_PATHS = "\"BraidSolitaire/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BraidSolitaire/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (

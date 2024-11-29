@@ -18,7 +18,7 @@ struct BraidSolitaireApp: App {
         WindowGroup {
         //  GameView()
         //  WelcomeView()
-            HomeView()
+            ContentView()
                 .environmentObject(gameViewModel)
         }
         .onChange(of: scenePhase) { newPhase in
@@ -26,10 +26,12 @@ struct BraidSolitaireApp: App {
             case .background, .inactive:
                 if gameViewModel.isItOver {
                     gameViewModel.saveGameState()
+                    print("inactive \(gameViewModel.timePassed)")
                 }
             case .active:
                 if !gameViewModel.isItOver {
                     gameViewModel.clearSavedGameState()
+                    print("active \(gameViewModel.timePassed)")
                 }
             default:
                 break

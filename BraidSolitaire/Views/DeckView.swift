@@ -16,8 +16,9 @@ struct DeckView: View {
         VStack {
             VStack {
                 // Display minutes and seconds
-                Text(gameViewModel.timeString(from: gameViewModel.timePassed))
+                Text(gameViewModel.timeString(from: (gameViewModel.timePassed)))
                     .font(.title)
+                    .foregroundStyle(.white)
                 
                 // Start/Stop Button
 //                Button(action: {
@@ -74,7 +75,7 @@ struct DeckView: View {
                         }
                 }else {
                     ForEach(gameViewModel.slots[SlotCode.closedDeck.rawValue]) { card in
-                        EmptyCardView(opacity: 0.0, apiImage: viewModel.randomImage, apiImageURL: viewModel.randomImage?.largeImageURL)
+                        EmptyCardView(opacity: 0.5, apiImage: viewModel.randomImage, apiImageURL: viewModel.randomImage?.largeImageURL)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                             .onTapGesture {
                                 withAnimation(.easeInOut) {

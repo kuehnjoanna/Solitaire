@@ -12,11 +12,7 @@ struct ControlButtonsView: View {
     
     var body: some View {
        HStack {
-            Button("undo") {
-                print(gameViewModel.moveHistory)
-                gameViewModel.unmove()
-                print(gameViewModel.moveHistory)
-            }
+         
             Button("move") {
                 dump(gameViewModel.slots[SlotCode.braid.rawValue])
             }
@@ -24,6 +20,11 @@ struct ControlButtonsView: View {
                 withAnimation(.bouncy) {
                     // gameViewModel.initializeCards()
                 }
+            }
+            Button("undo") {
+               print(gameViewModel.moveHistory)
+               gameViewModel.unmove()
+               print(gameViewModel.moveHistory)
             }
         }
     }

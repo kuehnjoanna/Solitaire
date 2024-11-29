@@ -18,8 +18,6 @@ class GameViewModel: ObservableObject{
     @Published  var timePassed: TimeInterval = 0
     var redeals = 3
     private  var timer: Timer? = nil
-    @AppStorage("currentTime")
-    private var storedTime: TimeInterval = 0
     var stats = [GameResults]()
     var moves = 0
     @Published var shuffledDeck : [Card] = []
@@ -39,7 +37,10 @@ class GameViewModel: ObservableObject{
         }
     }
     // storing game in case app goes inactive
-    @AppStorage("savedMoves") 
+    
+    @AppStorage("currentTime")
+    private var storedTime: TimeInterval = 0
+    @AppStorage("savedMoves")
     private var savedMoves: Int = 0
     @AppStorage("savedMoveHistory") 
     private var savedMoveHistory: Data?

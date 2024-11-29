@@ -16,17 +16,20 @@ struct DataModel: Identifiable {
 struct InstructionsView: View {
 
     let cardData = [
-    DataModel(icon: "paintbrush.fill", title: "Brushes", details: "Explore various brushes for different effects.", tag: 0),
-    DataModel(icon: "scribble", title: "Sketch", details: "kdjikasuodhassdh", tag: 1),
-    DataModel(icon: "square.and.pencil", title: "Shapes", details: "Draw and manipulate shapes with", tag: 2),
-    DataModel(icon: "paintpalette.fill", title: "Colors", details: "Choose from a wide range of palletes.", tag: 3),
-    DataModel(icon: "sparkle", title: "Effects", details: "Apply effects.", tag: 4)]
+    DataModel(icon: "paintbrush.fill", title: "Solitaire", details: "Braid Solitaire wird mit 104 Karten gespielt (2 Kartenspiele). 20 Karten werden als Reserve versetzt in Reihen von abwechselnd einer bzw. zwei Karten in der Mitte des Spielfelds ausgeteilt (Reserve). ", tag: 0),
+    DataModel(icon: "scribble", title: "Sketch", details: "Als nächstes werden 12 Spielstapel um die Reserve herum ausgelegt (je mit einer Karte belegt).", tag: 1),
+    DataModel(icon: "scribble", title: "Braid", details: " Die nächste Karte wird auf den ersten Ablagestapel platziert, sie dient als Startkarte, auf welche die 8 Sequenzen aufgebaut werden.", tag: 2),
+    DataModel(icon: "scribble", title: "Sketch", details: "Ziel des Spiels ist es, acht aufsteigende Sequenzen zu bilden (mit gleicher Farbe und gleichem Symbol)", tag: 3),
+    DataModel(icon: "square.and.pencil", title: "Tableau", details: "Es kann immer nur die oberste Karte des zugedeckten Stapels, der Reserve und der Spielstapel gespielt werden (Karten vom zugedeckten Stapel können bei Bedarf aufgedeckt werden).", tag: 4),
+    DataModel(icon: "paintpalette.fill", title: "Reserve", details: " Leere Spielstapel werden automatisch aufgefüllt. Karten von den Spielstapeln und der Reserve können nicht untereinander ausgetauscht werden.", tag: 5),
+    DataModel(icon: "sparkle", title: "Waste", details: "Während des Spiels können die Karten des zugedeckten Stapels (wenn aufgebraucht) zweimal neu gemischt werden.", tag: 6)]
     @State var currentPage = 0
     @State var previousPage = 0
     @State var width: CGFloat = 16
     @State var start = false
     @State var iconAnimation = false
     @State var navigateToHome = false
+    @State var animationGradient = false
     
     var body: some View {
         VStack{
@@ -43,22 +46,25 @@ struct InstructionsView: View {
             
             CustomStepsView(currentPage: $currentPage, numberOfCircles: cardData.count, circleSize: circleSize, width: $width)
             
-            CustomSteps(isLastPage: .constant(currentPage == cardData.count - 1), start: $start, goBack: {
-                withAnimation{
-                    if currentPage > 0 {
-                        currentPage -= 1
-                    }
-                }
-            }, next: {
-                withAnimation{
-                    if currentPage < cardData.count - 1{
-                        currentPage += 1
-                    }else{
-                        
-                    }
-                }      
-            }
-            )
+//            CustomSteps(isLastPage: .constant(currentPage == cardData.count - 1), start: $start, goBack: {
+//                withAnimation{
+//                    if currentPage > 0 {
+//                        currentPage -= 1
+//                    }
+//                }
+//            }, next: {
+//                withAnimation{
+//                    if currentPage < cardData.count - 1{
+//                        currentPage += 1
+//                    }else{
+//                        
+//                    }
+//                }      
+//            }
+            //)
+        }      
+        .background{
+            BackgroundView()
         }
     }
     
@@ -104,7 +110,7 @@ struct CustomStepsView: View {
         HStack(spacing: 0){
             ForEach(0..<numberOfCircles, id: \.self){ index in
                     Circle()
-                    .fill(index <= currentPage ? .white : .gray)
+                    .fill(index <= currentPage ? .white : .black)
                     .frame(width: circleSize(index, numberOfCircles), height: circleSize(index, numberOfCircles))
                     .frame(width: 30)
             }
@@ -113,7 +119,7 @@ struct CustomStepsView: View {
             RoundedRectangle(cornerRadius: 30)
                 .frame(width: width + 5, height: 20)
                 .offset(x: 4)
-                .foregroundStyle(.gray), alignment: .leading
+                .foregroundStyle(Color("BraidGreen")), alignment: .leading
         )
         .padding(.vertical)
     }
@@ -181,12 +187,15 @@ struct CustomStepsCardView: View {
             Text(vm.title).font(.title.bold())
             Text(vm.details)
                 .multilineTextAlignment(.center)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(.white)
                 .padding(.top)
         }
         .padding()
-        .frame(width: 300, height: 350)
-        .background(.gray, in: .rect(cornerRadius: 20))
+     //   .frame(width: 350, height: 500)
+        .frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.height * 0.7)
+        .background(//.gray, in: .rect(cornerRadius: 20))
+     ModalWindowView()
+        )
         .tag(vm.tag)
     }
 }
