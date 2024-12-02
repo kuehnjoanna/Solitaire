@@ -15,11 +15,13 @@ class GameViewModel: ObservableObject{
     @Published  var startingRank = 5
     @Published var isItOver = false
     @Published  var isRunning = false
+    @Published  var isSheetPresented = false
     @Published  var timePassed: TimeInterval = 0
     var redeals = 3
     private  var timer: Timer? = nil
     var stats = [GameResults]()
     var moves = 0
+    var usersName: String = ""
     @Published var shuffledDeck : [Card] = []
     //////
     private var context: ModelContext
@@ -108,6 +110,17 @@ class GameViewModel: ObservableObject{
         context.insert(result)
         print("Adding result: \(result)")
     }
+    
+    func deleteResult(result: GameResults){
+        context.delete(result)
+        fetchResults()
+    }
+    
+    func updateResultsName(result: GameResults, newName: String){
+        result.name = newName
+        isSheetPresented = false
+        fetchResults()
+    }
 /////////////
     //change this enum for the other one - delete it
             enum slotCode: Int {
@@ -124,10 +137,13 @@ class GameViewModel: ObservableObject{
         startTimer()
     }
     func start(){
+        clearSavedGameState()
         storedTime = 0 // Reset stored time
         timePassed = 0
         moves = 0
             //var slots = [[Card]]()
+        usersName = ""
+        redeals = 3
         slots = Array(repeating: [], count: 23)
         moveHistory.removeAll()
         //  startingRank = 5
@@ -378,13 +394,19 @@ class GameViewModel: ObservableObject{
                     // save time
                 }
                 stopTimer()
-
-              
-                let newResult = GameResults(time: timePassed, moves: moves)
-                 addResults(result: newResult)
-                print("function isGameOver, newResult: \(newResult)")
+                isSheetPresented = true 
+                //put name ->\
+                // let name = usersName()
+           
             }
         }
+    }
+    func saveResult(name: String){
+        usersName = name
+        let newResult = GameResults(time: timePassed, moves: moves, name: name)
+           addResults(result: newResult)
+          print("function isGameOver, newResult: \(newResult)")
+        isSheetPresented = false
     }
     
     func undoAll(){

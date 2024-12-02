@@ -13,8 +13,8 @@ struct ControlButtonsView: View {
     var body: some View {
        HStack {
          
-            Button("move") {
-                dump(gameViewModel.slots[SlotCode.braid.rawValue])
+            Button("restart") {
+                dump(gameViewModel.start())
             }
             Button("deck") {
                 withAnimation(.bouncy) {

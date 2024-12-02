@@ -12,9 +12,11 @@ class GameResults: Identifiable {
     let id: String = UUID().uuidString
     let time: TimeInterval
     let moves: Int
+    var name: String
     
-    init(time: TimeInterval, moves: Int){
+    init(time: TimeInterval, moves: Int, name: String){
         self.time = time
         self.moves = moves
+        self.name = name
     }
 }
